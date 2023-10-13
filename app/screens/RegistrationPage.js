@@ -1,7 +1,13 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, StatusBar, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { ImageBackground, StyleSheet, 
+         StatusBar, View, Text, TextInput, 
+         TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 
 function RegistrationPage(props) {
+
+    const navigation = useNavigation()
+
     return (
         <ImageBackground style={styles.container}>
             <View style={styles.box1}>
@@ -11,28 +17,45 @@ function RegistrationPage(props) {
                 <Text style={styles.Txt2}>
                     Let's keep your house safe
                 </Text>
-            </View>
-            <View style={styles.box2}>
-                <TextInput style={styles.Inputbox} placeholder='Enter your full name'/>
 
-                <TextInput style={styles.Inputbox} placeholder='Enter your Email'/>
+                <TextInput 
+                style={styles.Inputbox} 
+                placeholder='Enter your full name'/>
 
-                <TextInput style={styles.Inputbox} placeholder='Enter password'/>
+                <TextInput 
+                style={styles.Inputbox} 
+                placeholder='Enter your Email'/>
 
-                <TextInput style={styles.Inputbox} placeholder='Confirm password'/>
-            </View>
-            <View style={styles.box3}>
+                <TextInput 
+                style={styles.Inputbox} 
+                placeholder='Enter your complete address'/>
+
+                <TextInput 
+                style={styles.Inputbox} 
+                placeholder='Enter password'
+                secureTextEntry={true}/>
+
+                <TextInput 
+                style={styles.Inputbox} 
+                placeholder='Confirm password'
+                secureTextEntry={true}/>
+
                 <TouchableOpacity style={styles.Sbmt}>
                     <Text style={styles.SbmtTxt}>
                         Register
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{paddingTop: 10,}}>
+                <TouchableOpacity  
+                    onPress={() => navigation.replace('Welcome')} 
+                    style={{paddingTop: 10,}}>
                     <Text>
                         Already have and account? 
                     </Text>
                 </TouchableOpacity>
             </View>
+            
+                
+        
         </ImageBackground>
     );
 }
@@ -46,7 +69,7 @@ const styles = StyleSheet.create ({
     box1: {
         flex: 2,
         backgroundColor: '#f93d06',
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         alignItems: 'center',
     },
 
@@ -80,6 +103,7 @@ const styles = StyleSheet.create ({
         borderRadius: 25,
         backgroundColor: '#ffff',
         padding: 20,
+        marginBottom: 10,
     },
 
     Sbmt: {

@@ -1,9 +1,12 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { View, StyleSheet, ImageBackground, 
         Text, Platform, StatusBar, Button, 
         TouchableOpacity, Image } from 'react-native';
 
 function WelcomeScreen(props) {
+    const navigation = useNavigation()
+
     return (
         <ImageBackground style={styles.container}>
             <View style={styles.box2}>
@@ -18,7 +21,7 @@ function WelcomeScreen(props) {
 
             </View>
             <View style={styles.box3}>
-                <TouchableOpacity style={styles.Btn1}>
+                <TouchableOpacity style={styles.Btn1} onPress={() => navigation.replace('Registration')}>
                     <Text style={styles.Txt1}>Get Started</Text>
                 </TouchableOpacity>
                 <Image style={styles.image} source={require('../assets/lol.png')}/>
