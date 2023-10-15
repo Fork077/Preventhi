@@ -2,11 +2,23 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ImageBackground, StyleSheet, 
          StatusBar, View, Text, TextInput, 
-         TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+         TouchableOpacity, Platform } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useState } from 'react';
 
 function RegistrationPage(props) {
 
     const navigation = useNavigation()
+
+    const[name, setUsername] = useState('')
+    const[email, setEmail] = useState('')
+    const[address, setAddress] = useState('')
+    const[password, setPassword] = useState('')
+    const[cpassword, setCPassword] = useState('')
+
+
+    const [show, setShow] = useState(false);
+    const [hide, setHide] = useState(true);
 
     return (
         <ImageBackground style={styles.container}>
@@ -30,28 +42,50 @@ function RegistrationPage(props) {
                 style={styles.Inputbox} 
                 placeholder='Enter your complete address'/>
 
-                <TextInput 
+            <View style={styles.box}>
+                  <TextInput 
                 style={styles.Inputbox} 
                 placeholder='Enter password'
-                secureTextEntry={true}/>
+                secureTextEntry={hide}/>
+
+                <TouchableOpacity 
+                style={styles.viewpass}
+                onPress={() => {
+                    setHide(!hide) 
+                    setShow(!show)}}>
+                    <MaterialCommunityIcons
+                    name={show === false ? 'eye-outline' : 'eye-off-outline' }
+                    size={28}
+                    color={"black"}
+                    />
+                </TouchableOpacity>
+
+            </View>
 
                 <TextInput 
                 style={styles.Inputbox} 
                 placeholder='Confirm password'
-                secureTextEntry={true}/>
+                secureTextEntry={hide}/>
 
                 <TouchableOpacity style={styles.Sbmt}>
                     <Text style={styles.SbmtTxt}>
                         Register
                     </Text>
                 </TouchableOpacity>
+
+            <View style={styles.signupDisplay}>
+                <Text>
+                    Already have and account?  
+                </Text>
+
                 <TouchableOpacity  
-                    onPress={() => navigation.replace('Welcome')} 
-                    style={{paddingTop: 10,}}>
-                    <Text>
-                        Already have and account? 
+                    onPress={() => navigation.replace('Welcome')}>
+                    <Text style={{textDecorationLine: 'underline', paddingLeft: 5,}}>
+                        Log in here 
                     </Text>
                 </TouchableOpacity>
+            </View>
+                
             </View>
             
                 
@@ -117,6 +151,22 @@ const styles = StyleSheet.create ({
         padding: 10,
         fontWeight: 'bold',
         fontSize: 30,
+    },
+    viewpass: {
+        position: "absolute",
+        right: 50,
+        bottom: 25
+    },
+
+    box:{
+        width: '100%',
+        alignItems: 'center',
+    },
+
+    signupDisplay: {
+        flexDirection: "row",
+        alignItems: "center",
+        paddingTop: 10,
     },
 });
 
