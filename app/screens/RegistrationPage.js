@@ -43,7 +43,7 @@ function RegistrationPage(props) {
                 placeholder='Enter your complete address'/>
 
             <View style={styles.box}>
-                  <TextInput 
+                <TextInput 
                 style={styles.Inputbox} 
                 placeholder='Enter password'
                 secureTextEntry={hide}/>
@@ -74,13 +74,13 @@ function RegistrationPage(props) {
                 </TouchableOpacity>
 
             <View style={styles.signupDisplay}>
-                <Text>
+                <Text style={styles.txt}>
                     Already have and account?  
                 </Text>
 
                 <TouchableOpacity  
-                    onPress={() => navigation.replace('Welcome')}>
-                    <Text style={{textDecorationLine: 'underline', paddingLeft: 5,}}>
+                    onPress={() => navigation.replace('Login')}>
+                    <Text style={{textDecorationLine: 'underline', paddingLeft: 5, color: '#FF9900'}}>
                         Log in here 
                     </Text>
                 </TouchableOpacity>
@@ -122,11 +122,13 @@ const styles = StyleSheet.create ({
     },
 
     Txt1: {
+        color: 'white',
         fontWeight: "600",
         fontSize: 25,
     },
 
     Txt2: {
+        color: "white",
         fontSize: 12,
         paddingBottom: 14,
     },
@@ -147,6 +149,7 @@ const styles = StyleSheet.create ({
     },
 
     SbmtTxt: {
+        color: "white",
         textAlign: 'center',
         padding: 10,
         fontWeight: 'bold',
@@ -168,6 +171,10 @@ const styles = StyleSheet.create ({
         alignItems: "center",
         paddingTop: 10,
     },
+
+    txt: {
+        color: "white",
+    }
 });
 
 export default RegistrationPage;
