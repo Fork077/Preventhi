@@ -1,54 +1,38 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, StatusBar, View } from 'react-native';
-import MapView from 'react-native-maps';
+import { ImageBackground, StyleSheet, StatusBar, View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import HomeScreen from './HomeScreen';
+import NotifScreen from './NotifScreen';
+import RoomScreen from './RoomScreen';
+import MeScreen from './MeScreen';
+
+
+const Tab = createBottomTabNavigator();
 
 function Dash(props) {
     return (
-        <ImageBackground style={styles.box1}>
-             <MapView
-                style={styles.container}
-                initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-            }}
-            >
-
-            <MapViewDirections
-                origin={origin}
-                destination={destination}
-                apikey={GOOGLE_MAPS_APIKEY}
-            />
-            
-            </MapView>
-
-            <View style={styles.box2}>
-
-            </View>
-        </ImageBackground>
-       
-    );
+        <Tab.Navigator 
+        initialRouteName='Home'
+        screenOptions={{tabBarActiveBackgroundColor: '#F93D06', tabBarActiveTintColor: 'white', tabBarInactiveTintColor: 'black'}}>
+             <Tab.Screen name="Home" component={HomeScreen} options= {{headerShown: false, tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />),}}/>
+             <Tab.Screen name="Rooms" component={RoomScreen} options={{headerShown: false, tabBarIcon: ({color, size})=> (
+             <MaterialCommunityIcons name='sofa' color={color} size={25}/>)}} />
+             <Tab.Screen name="Notification" component={NotifScreen} options={{headerShown: false, tabBarIcon: ({color, size}) => (
+             <MaterialCommunityIcons name='bell' color={color} size={20} />)}} />
+             <Tab.Screen name="Me" component={MeScreen} options={{headerShown: false, tabBarIcon: ({color, size}) => (
+             <MaterialCommunityIcons name='account' color={color} size={25}/>
+             )}}/>
+        </Tab.Navigator>
+      );
 }
 
 const styles = StyleSheet.create ({
-    container: {
-        flex: 3,
-        
-    },
-
-    box1: {
-        flex: 1,
-        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    },
-
-    box2: {
-        flex: 1,
-        backgroundColor: '#f93d06',
+    txtColor: {
+        color: 'black',
     }
-
 })
-
-
 
 export default Dash;
