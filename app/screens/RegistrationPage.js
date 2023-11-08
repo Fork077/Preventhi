@@ -2,19 +2,50 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ImageBackground, StyleSheet, 
          StatusBar, View, Text, TextInput, 
-         TouchableOpacity, Platform } from 'react-native';
+         TouchableOpacity, Platform, NativeEventEmitter } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState } from 'react';
+import {firebase} from '../../Firebase/Config';
 
-function RegistrationPage(props) {
+
+const RegistrationPage = (props) => {
 
     const navigation = useNavigation()
 
-    const[name, setUsername] = useState('')
+    const[name, setName] = useState('')
     const[email, setEmail] = useState('')
     const[address, setAddress] = useState('')
     const[password, setPassword] = useState('')
     const[cpassword, setCPassword] = useState('')
+
+    registerUser = async (name, email, address, password) => {
+        await firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(() => {
+            firebase.auth().currentUser.sendEmailVerification({
+                handleCodeInApp: true,
+                url: '',
+            })
+            .then (() => {
+                alert('Account Succesfully created. \nVerification email sent')
+            }).catch((error)=> {
+                alert(error.message)
+            })
+            .then(() => {
+                firebase.firestore().collection('users')
+                .doc(firebase.auth().currentUser.uid)
+                .set({
+                    email,
+                    name,
+                })
+            })
+            .catch((error) => {
+                alert(error.message)
+            })
+        })
+        .catch((error => {
+            alert(error.message)
+        }))
+    }
 
 
     const [show, setShow] = useState(false);
@@ -32,20 +63,32 @@ function RegistrationPage(props) {
 
                 <TextInput 
                 style={styles.Inputbox} 
-                placeholder='Enter your full name'/>
+                placeholder='Enter your full name'
+                value={name}
+                onChangeText={(name) => setName(name)}/>
 
                 <TextInput 
                 style={styles.Inputbox} 
-                placeholder='Enter your Email'/>
+                placeholder='Enter your Email'
+                value={email}
+                onChangeText={(email) => setEmail(email)}
+                autoCorrect={false}
+                autoCapitalize='none'
+                keyboardType= 'email-address'/>
 
                 <TextInput 
                 style={styles.Inputbox} 
-                placeholder='Enter your complete address'/>
+                placeholder='Enter your complete address'
+                value={address}
+                onChangeText={(address) => setAddress(address)}
+                />
 
             <View style={styles.box}>
                 <TextInput 
                 style={styles.Inputbox} 
                 placeholder='Enter password'
+                value={password}
+                onChangeText={(password) => setPassword(password)}
                 secureTextEntry={hide}/>
 
                 <TouchableOpacity 
@@ -65,9 +108,17 @@ function RegistrationPage(props) {
                 <TextInput 
                 style={styles.Inputbox} 
                 placeholder='Confirm password'
+                value={cpassword}
+                onChangeText={(cpassword) => setCPassword(cpassword)}
                 secureTextEntry={hide}/>
 
-                <TouchableOpacity style={styles.Sbmt}>
+                <TouchableOpacity style={styles.Sbmt} onPress={() => {
+                    if(password === cpassword) {
+                        registerUser(name, email, address, password)
+                    }else{
+                        Alert.alert('Password do not match')
+                    }
+                }}>
                     <Text style={styles.SbmtTxt}>
                         Register
                     </Text>

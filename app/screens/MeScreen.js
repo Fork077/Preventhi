@@ -1,18 +1,40 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { ImageBackground, StyleSheet, Text, View, StatusBar, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import {firebase} from '../../Firebase/Config';
 
-function MeScreen(props) {
+const MeScreen = (props) => {
+
+    const [accname, setAccName] = useState('')
+    const [account, setAccount] = useState('')
+
+    useEffect(() => {
+        firebase.firestore().collection('users')
+        .doc(firebase.auth().currentUser.uid).get()
+        .then((snapshot) => {
+            if(snapshot.exists){
+                setAccName(snapshot.data())
+                setAccount(snapshot.data())
+            }
+            else{
+                console.log('User does not exist')
+            }
+        })
+    }, [])
+
+    const navigation = useNavigation()
+
     return (
         <ImageBackground style={styles.container}>
             <View style={styles.box1}>
                 <MaterialCommunityIcons name='account-circle' size={130}/>
                 <View style={styles.ProfTxt}>
                     <Text style={styles.h1}>
-                        USER NAME
+                        {accname.name}
                     </Text>
                     <Text>
-                        USER EMAIL ADDRESS
+                        {account.email}
                     </Text>
                 </View>
             </View>
@@ -32,7 +54,7 @@ function MeScreen(props) {
                 </Text>
 
                 <View style={styles.ExtBtn}>
-                    <TouchableOpacity style={styles.Btn}>
+                    <TouchableOpacity style={styles.Btn} onPress={() => navigation.replace('Login') }>
                         <Text style={styles.BtnText}>
                             Log Out
                         </Text>
