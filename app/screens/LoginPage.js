@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, 
         View, 
         StatusBar,
@@ -9,11 +9,23 @@ import { StyleSheet,
         TouchableOpacity
                 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {firebase} from '../../Firebase/Config';
 
+const LoginPage = (props) => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
-function LoginPage(props) {
-
+    const loginUser = async (email, password) => {
+        try{
+            await firebase.auth().signInWithEmailAndPassword(email, password)
+        } catch (error){
+            alert('invalid email or password please check carefully')
+        }
+    }
     const navigation = useNavigation()
+    const [show, setShow] = useState(false);
+    const [visible, setVisible] = useState(true);
 
     return (
         <ImageBackground style={styles.container}>
@@ -21,11 +33,31 @@ function LoginPage(props) {
                 <Image style={styles.image1} source={require('../assets/logo-removebg-preview.png')} />
 
                     <TextInput style={styles.inputBox}
-                        placeholder='Enter Email'/>
+                        placeholder='Enter Email'
+                        value={email}
+                        onChangeText={(email) => setEmail(email)}
+                        keyboardType={'email-address'}/>
 
-                    <TextInput style={styles.inputBox}
+                    <View style={{width: '100%', alignItems: 'center',}}>
+                        <TextInput style={styles.inputBox}
                         placeholder='Enter Password'
-                        secureTextEntry={true}/>
+                        value={password}
+                        onChangeText={(password) => setPassword(password)}
+                        secureTextEntry={visible}/>
+
+                    <TouchableOpacity 
+                        style={{position: "absolute", right: '12%', bottom: '35%'}}
+                        onPress={() => { setVisible(!visible) 
+                        setShow(!show)}}>
+
+                    <MaterialCommunityIcons
+                    name={show === false ? 'eye-outline' : 'eye-off-outline' }
+                    size={28}
+                    color={"#F93D06"}
+                    />
+                </TouchableOpacity>
+                    </View>
+                    
 
                 <View style={styles.signupDisplay}>
                     <Text style={styles.txt1}>
@@ -33,7 +65,7 @@ function LoginPage(props) {
                     </Text>
 
                 <TouchableOpacity  
-                    onPress={() => navigation.replace('Registration')}>
+                    onPress={() => navigation.replace("Registration")}>
                     <Text style={{textDecorationLine: 'underline', paddingLeft: 5, color: '#FF9900'}}>
                         Sign up here
                     </Text>
@@ -41,7 +73,7 @@ function LoginPage(props) {
             </View>
             </View>
             <View style={styles.box2}>
-                <TouchableOpacity style={styles.Sbmt} onPress={() => navigation.replace("Dashboard")}>
+                <TouchableOpacity style={styles.Sbmt} onPress={() => loginUser(email, password)}>
                     <Text style={styles.SbmtTxt}>
                         LOG IN
                     </Text>

@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ImageBackground, StyleSheet, 
          StatusBar, View, Text, TextInput, 
-         TouchableOpacity, Platform, NativeEventEmitter } from 'react-native';
+         TouchableOpacity, Platform,} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState } from 'react';
 import {firebase} from '../../Firebase/Config';
@@ -23,7 +23,7 @@ const RegistrationPage = (props) => {
         .then(() => {
             firebase.auth().currentUser.sendEmailVerification({
                 handleCodeInApp: true,
-                url: '',
+                url: 'https://preventhi.firebaseapp.com',
             })
             .then (() => {
                 alert('Account Succesfully created. \nVerification email sent')
@@ -36,6 +36,7 @@ const RegistrationPage = (props) => {
                 .set({
                     email,
                     name,
+                    address,
                 })
             })
             .catch((error) => {
@@ -99,7 +100,7 @@ const RegistrationPage = (props) => {
                     <MaterialCommunityIcons
                     name={show === false ? 'eye-outline' : 'eye-off-outline' }
                     size={28}
-                    color={"black"}
+                    color={"#F93D06"}
                     />
                 </TouchableOpacity>
 

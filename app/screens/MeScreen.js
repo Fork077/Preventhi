@@ -1,29 +1,27 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, {useState, useEffect} from 'react';
 import { ImageBackground, StyleSheet, Text, View, StatusBar, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import {firebase} from '../../Firebase/Config';
 
-const MeScreen = (props) => {
-
-    const [accname, setAccName] = useState('')
+const MeScreen = () => {
+    const [name, setName] = useState('')
     const [account, setAccount] = useState('')
+    const [address, setAddress] = useState('')
 
     useEffect(() => {
         firebase.firestore().collection('users')
         .doc(firebase.auth().currentUser.uid).get()
         .then((snapshot) => {
             if(snapshot.exists){
-                setAccName(snapshot.data())
+                setName(snapshot.data())
                 setAccount(snapshot.data())
+                setAddress(snapshot.data())
             }
-            else{
+            else {
                 console.log('User does not exist')
             }
         })
     }, [])
-
-    const navigation = useNavigation()
 
     return (
         <ImageBackground style={styles.container}>
@@ -31,7 +29,7 @@ const MeScreen = (props) => {
                 <MaterialCommunityIcons name='account-circle' size={130}/>
                 <View style={styles.ProfTxt}>
                     <Text style={styles.h1}>
-                        {accname.name}
+                        {name.name}
                     </Text>
                     <Text>
                         {account.email}
@@ -41,20 +39,20 @@ const MeScreen = (props) => {
 
             <View style={styles.box2}>
                 <Text style={styles.txtConfig}>
-                    Email:
+                    Email: {account.email}
                 </Text >
                 <Text style={styles.txtConfig}>
                     Mobile Number:
                 </Text>
                 <Text style={styles.txtConfig}>
-                    Address:
+                    Address: {address.address}
                 </Text>
                 <Text style={styles.txtConfig}>
                     Type of occupancy:
                 </Text>
 
                 <View style={styles.ExtBtn}>
-                    <TouchableOpacity style={styles.Btn} onPress={() => navigation.replace('Login') }>
+                    <TouchableOpacity style={styles.Btn} onPress={() => {firebase.auth().signOut()}}>
                         <Text style={styles.BtnText}>
                             Log Out
                         </Text>

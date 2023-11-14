@@ -21,7 +21,7 @@ function WelcomeScreen(props) {
 
             </View>
             <View style={styles.box3}>
-                <TouchableOpacity style={styles.Btn1} onPress={() => navigation.replace('Registration')}>
+                <TouchableOpacity style={styles.Btn1} onPress={() => navigation.replace('Login')}>
                     <Text style={styles.Txt1}>Get Started</Text>
                 </TouchableOpacity>
                 <Image style={styles.image} source={require('../assets/lol.png')}/>
