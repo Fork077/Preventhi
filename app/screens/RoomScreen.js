@@ -1,10 +1,28 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React from 'react';
-import { ImageBackground, StyleSheet, Text, View, StatusBar, TouchableOpacity } from 'react-native';
+import {React, useState} from 'react';
+import { ImageBackground, StyleSheet, Text, View, StatusBar, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import CircularProgress from 'react-native-circular-progress-indicator';
+import { db } from '../../Firebase/Config';
+import { ref, onValue } from 'firebase/database';
 
 function RoomScreen(props) {
+
+    const [prog, setProg] = useState(0)
+    const [smokeVal, setSmokeVal] = useState(0)
+    const [humidityVal, setHumidityVal] = useState(0)
+    const [gasVal, setGasVal] = useState(0)
+    
+    function readData() {
+        const starCountRef = ref(db);
+        onValue(starCountRef, (snapshot) => {
+            const data = snapshot.val();
+            setProg(data.temperature)
+            setSmokeVal(data.smokeValue)
+            setGasVal(data.lpgValue)
+            setHumidityVal(data.humidity)
+        });
+    }
 
     const navigation = useNavigation()
 
@@ -22,7 +40,7 @@ function RoomScreen(props) {
                     <View style ={styles.individ}>
                         <View style={styles.divBox}>
                             <CircularProgress
-                            value={45.06}
+                            value={smokeVal}
                             titleColor={'#333'}
                             titleStyle={{ fontWeight: 'bold' }}
                             circleBackgroundColor={'white'}
@@ -45,7 +63,7 @@ function RoomScreen(props) {
                     <View style={styles.individ}>
                         <View style={styles.divBox}>
                             <CircularProgress
-                            value={11.01}
+                            value={humidityVal}
                             titleColor={'#333'}
                             titleStyle={{ fontWeight: 'bold' }}
                             circleBackgroundColor={'white'}
@@ -92,14 +110,14 @@ function RoomScreen(props) {
                     <View style={styles.individ}>
                         <View style={styles.divBox}>
                             <CircularProgress
-                                value={10}
+                                value={prog}
                                 titleColor={'#333'}
                                 titleStyle={{ fontWeight: 'bold' }}
                                 circleBackgroundColor={'white'}
                                 activeStrokeColor={'darkorange'}
                                 activeStrokeSecondaryColor={'#C3305D'}
                                 inActiveStrokeColor={'grey'}
-                                valueSuffix={'%'}
+                                valueSuffix={'°C'}
                                 progressFormatter={(value, number) => {'worklet';
       
                                 return value.toFixed(2); // 2 decimal places
@@ -116,7 +134,7 @@ function RoomScreen(props) {
                     <View style={styles.individ}>
                         <View style={styles.divBox}>
                             <CircularProgress
-                                value={10}
+                                value={gasVal}
                                 titleColor={'#333'}
                                 titleStyle={{ fontWeight: 'bold' }}
                                 circleBackgroundColor={'white'}
@@ -135,6 +153,11 @@ function RoomScreen(props) {
                         </Text>
                     </View>
                 </View>
+                <TouchableOpacity style={styles.button} onPress={readData}> 
+                    <Text style={styles.buttonText}>
+                        READ
+                    </Text>
+                </TouchableOpacity>
             </View>
         </ImageBackground>
     );
