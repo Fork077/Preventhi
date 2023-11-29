@@ -61,7 +61,8 @@ const RegistrationPage = (props) => {
                 <Text style={styles.Txt2}>
                     Let's keep your house safe
                 </Text>
-
+            
+            <View style={styles.box2}>
                 <TextInput 
                 style={styles.Inputbox} 
                 placeholder='Enter your full name'
@@ -100,10 +101,10 @@ const RegistrationPage = (props) => {
                     <MaterialCommunityIcons
                     name={show === false ? 'eye-outline' : 'eye-off-outline' }
                     size={28}
-                    color={"#F93D06"}
+                    color={"black"}
                     />
                 </TouchableOpacity>
-
+                
             </View>
 
                 <TextInput 
@@ -112,12 +113,14 @@ const RegistrationPage = (props) => {
                 value={cpassword}
                 onChangeText={(cpassword) => setCPassword(cpassword)}
                 secureTextEntry={hide}/>
+            </View>
+                
 
                 <TouchableOpacity style={styles.Sbmt} onPress={() => {
                     if(password === cpassword) {
                         registerUser(name, email, address, password)
                     }else{
-                        Alert.alert('Password do not match')
+                        alert('Password do not match')
                     }
                 }}>
                     <Text style={styles.SbmtTxt}>
@@ -137,7 +140,7 @@ const RegistrationPage = (props) => {
                     </Text>
                 </TouchableOpacity>
             </View>
-                
+  
             </View>
             
                 
@@ -153,17 +156,19 @@ const styles = StyleSheet.create ({
     },
 
     box1: {
-        flex: 2,
-        backgroundColor: '#f93d06',
+        flex: 1,
+        backgroundColor: '#D71313',
         justifyContent: 'center',
         alignItems: 'center',
     },
 
     box2: {
-        flex: 3,
+        borderRadius: 15,
+        width: '90%',
         alignItems: 'center',
-        backgroundColor: '#f93d06',
-        paddingTop: 40,
+        backgroundColor: 'white',
+        padding: 8,
+        marginBottom: 10,
         justifyContent: 'space-evenly',
     },
 
@@ -174,23 +179,24 @@ const styles = StyleSheet.create ({
     },
 
     Txt1: {
-        color: 'white',
+        color: '#F5F5F5',
         fontWeight: "600",
         fontSize: 25,
     },
 
     Txt2: {
-        color: "white",
+        color: "#F5F5F5",
         fontSize: 12,
         paddingBottom: 14,
     },
 
     Inputbox: {
-        width: '90%',
+        width: '99%',
         height: 55,
         borderRadius: 25,
         backgroundColor: '#ffff',
         padding: 20,
+        borderBottomWidth: 1,
         marginBottom: 10,
     },
 
@@ -209,7 +215,7 @@ const styles = StyleSheet.create ({
     },
     viewpass: {
         position: "absolute",
-        right: 50,
+        right: 25,
         bottom: 25
     },
 
@@ -225,7 +231,7 @@ const styles = StyleSheet.create ({
     },
 
     txt: {
-        color: "white",
+        color: "#F5F5F5",
     }
 });
 

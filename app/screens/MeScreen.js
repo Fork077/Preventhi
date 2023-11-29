@@ -75,7 +75,7 @@ const styles = StyleSheet.create ({
 
     box1: {
         flex: 1,
-        backgroundColor: 'lightgray',
+        backgroundColor: '#E7E6E1',
         alignItems: "center",
         flexDirection: 'row',
     },
@@ -84,7 +84,7 @@ const styles = StyleSheet.create ({
         paddingLeft: 10,
         paddingTop: 20,
         flex: 3,
-        backgroundColor: '#F93D06',
+        backgroundColor: '#D71313',
     },
 
     txtConfig:{
@@ -100,6 +100,7 @@ const styles = StyleSheet.create ({
     },
 
     Btn:{
+        borderRadius: 10,
         height: 50,
         width: '40%',
         backgroundColor: '#f1950e',

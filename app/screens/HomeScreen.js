@@ -20,7 +20,7 @@ const styles = StyleSheet.create ({
 
      box1: {
         flex: 1,
-        backgroundColor: '#F93D06',
+        backgroundColor: '#D71313',
         alignItems: "center",
     },
 

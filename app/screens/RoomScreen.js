@@ -31,7 +31,7 @@ function RoomScreen(props) {
             <View style={styles.box1}>
                 <View style={styles.rowDirection}>
                     <TouchableOpacity>
-                        <MaterialCommunityIcons name='less-than' color={'#FF9900'} size={40}/>
+                        <MaterialCommunityIcons name='less-than' color={'#EA5455'} size={40}/>
                     </TouchableOpacity>
                     <Text style={styles.txt}>LIVING ROOM</Text>
                 </View>
@@ -171,12 +171,12 @@ const styles = StyleSheet.create ({
 
     box1: {
         flex: 1,
-        backgroundColor: "#f93d06",
+        backgroundColor: "#E7E6E1",
         justifyContent: 'center',
     },
 
     txt:{
-        color: 'white',
+        color: '#EA5455',
         fontWeight: '500',
         fontSize: 25,
         paddingLeft: 25,

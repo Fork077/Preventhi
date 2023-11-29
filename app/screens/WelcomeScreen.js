@@ -38,14 +38,14 @@ const styles = StyleSheet.create ({
 
     box2: {
         flex: 2,
-        backgroundColor: '#f93d06',
+        backgroundColor: '#D71313',
         justifyContent: "flex-end",
         alignItems: 'center',
     },
 
     box3: {
         flex: 3,
-        backgroundColor: '#f93d06',
+        backgroundColor: '#D71313',
         justifyContent: "flex-end",
         alignItems:'center',
         justifyContent: 'space-between',
@@ -64,6 +64,7 @@ const styles = StyleSheet.create ({
     },
 
     Txt1:{
+        color: 'white',
         textAlign: 'center',
         padding: 10,
         fontWeight: 'bold',
@@ -71,12 +72,14 @@ const styles = StyleSheet.create ({
     },
 
     Txt2: {
+        color: 'white',
         textAlign: 'right',
         fontWeight: '600',
         fontSize: 30,
     },
     
     Txt3: {
+        color: 'white',
         textAlign:'right',
         fontWeight: '400',
         paddingHorizontal: 40,
