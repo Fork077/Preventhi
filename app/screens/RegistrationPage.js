@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ImageBackground, StyleSheet, 
          StatusBar, View, Text, TextInput, 
-         TouchableOpacity, Platform,} from 'react-native';
+         TouchableOpacity, Platform, ScrollView} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState } from 'react';
 import {firebase} from '../../Firebase/Config';
@@ -17,8 +17,9 @@ const RegistrationPage = (props) => {
     const[address, setAddress] = useState('')
     const[password, setPassword] = useState('')
     const[cpassword, setCPassword] = useState('')
+    const[mobileNumber, setMobileNum] = useState('')
 
-    registerUser = async (name, email, address, password) => {
+    registerUser = async (name, email, address, password, mobileNumber) => {
         await firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(() => {
             firebase.auth().currentUser.sendEmailVerification({
@@ -37,6 +38,7 @@ const RegistrationPage = (props) => {
                     email,
                     name,
                     address,
+                    mobileNumber,
                 })
             })
             .catch((error) => {
@@ -63,62 +65,68 @@ const RegistrationPage = (props) => {
                 </Text>
             
             <View style={styles.box2}>
-                <TextInput 
-                style={styles.Inputbox} 
-                placeholder='Enter your full name'
-                value={name}
-                onChangeText={(name) => setName(name)}/>
+                <ScrollView>
+                    <TextInput 
+                        style={styles.Inputbox} 
+                        placeholder='Enter your full name'
+                        value={name}
+                        onChangeText={(name) => setName(name)}/>
 
-                <TextInput 
-                style={styles.Inputbox} 
-                placeholder='Enter your Email'
-                value={email}
-                onChangeText={(email) => setEmail(email)}
-                autoCorrect={false}
-                autoCapitalize='none'
-                keyboardType= 'email-address'/>
+                    <TextInput 
+                        style={styles.Inputbox} 
+                        placeholder='Enter your Email'
+                        value={email}
+                        onChangeText={(email) => setEmail(email)}
+                        autoCorrect={false}
+                        autoCapitalize='none'
+                        keyboardType= 'email-address'/>
 
-                <TextInput 
-                style={styles.Inputbox} 
-                placeholder='Enter your complete address'
-                value={address}
-                onChangeText={(address) => setAddress(address)}
-                />
-
-            <View style={styles.box}>
-                <TextInput 
-                style={styles.Inputbox} 
-                placeholder='Enter password'
-                value={password}
-                onChangeText={(password) => setPassword(password)}
-                secureTextEntry={hide}/>
-
-                <TouchableOpacity 
-                style={styles.viewpass}
-                onPress={() => {
-                    setHide(!hide) 
-                    setShow(!show)}}>
-                    <MaterialCommunityIcons
-                    name={show === false ? 'eye-outline' : 'eye-off-outline' }
-                    size={28}
-                    color={"black"}
+                    <TextInput 
+                        style={styles.Inputbox} 
+                        placeholder='Enter your complete address'
+                        value={address}
+                        onChangeText={(address) => setAddress(address)}
                     />
-                </TouchableOpacity>
-                
-            </View>
 
-                <TextInput 
-                style={styles.Inputbox} 
-                placeholder='Confirm password'
-                value={cpassword}
-                onChangeText={(cpassword) => setCPassword(cpassword)}
-                secureTextEntry={hide}/>
-            </View>
-                
+                <View style={styles.box}>
+                    <TextInput 
+                        style={styles.Inputbox} 
+                        placeholder='Enter password'
+                        value={password}
+                        onChangeText={(password) => setPassword(password)}
+                        secureTextEntry={hide}/>
 
+                    <TouchableOpacity 
+                        style={styles.viewpass}
+                        onPress={() => {
+                            setHide(!hide) 
+                            setShow(!show)}}>
+                            <MaterialCommunityIcons
+                            name={show === false ? 'eye-outline' : 'eye-off-outline' }
+                            size={28}
+                            color={"black"}
+                        />
+                    </TouchableOpacity>
+                </View>
+                    <TextInput 
+                        style={styles.Inputbox} 
+                        placeholder='Confirm password'
+                        value={cpassword}
+                        onChangeText={(cpassword) => setCPassword(cpassword)}
+                        secureTextEntry={hide}/>
+
+                    <TextInput
+                        style={styles.Inputbox}
+                        placeholder='Enter Mobile Number'
+                        value={mobileNumber}
+                        onChangeText={(mobileNumber) => setMobileNum(mobileNumber)} 
+                        />
+                </ScrollView>
+            </View>
+           
                 <TouchableOpacity style={styles.Sbmt} onPress={() => {
                     if(password === cpassword) {
-                        registerUser(name, email, address, password)
+                        registerUser(name, email, address, password, mobileNumber)
                     }else{
                         alert('Password do not match')
                     }
@@ -142,9 +150,6 @@ const RegistrationPage = (props) => {
             </View>
   
             </View>
-            
-                
-        
         </ImageBackground>
     );
 }
@@ -157,19 +162,18 @@ const styles = StyleSheet.create ({
 
     box1: {
         flex: 1,
-        backgroundColor: '#D71313',
+        backgroundColor: '#B90B0B',
         justifyContent: 'center',
         alignItems: 'center',
     },
 
     box2: {
+        height: '45%',
         borderRadius: 15,
         width: '90%',
-        alignItems: 'center',
         backgroundColor: 'white',
-        padding: 8,
+        padding: 9,
         marginBottom: 10,
-        justifyContent: 'space-evenly',
     },
 
     box3: {
@@ -191,11 +195,12 @@ const styles = StyleSheet.create ({
     },
 
     Inputbox: {
-        width: '99%',
+        width: '94%',
+        borderRadius: 20,
         height: 55,
-        borderRadius: 25,
         backgroundColor: '#ffff',
         padding: 20,
+        marginLeft: 1,
         borderBottomWidth: 1,
         marginBottom: 10,
     },
@@ -215,13 +220,12 @@ const styles = StyleSheet.create ({
     },
     viewpass: {
         position: "absolute",
-        right: 25,
+        right: 45,
         bottom: 25
     },
 
     box:{
         width: '100%',
-        alignItems: 'center',
     },
 
     signupDisplay: {
