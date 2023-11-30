@@ -38,14 +38,14 @@ const styles = StyleSheet.create ({
 
     box2: {
         flex: 2,
-        backgroundColor: '#D71313',
+        backgroundColor: '#B90B0B',
         justifyContent: "flex-end",
         alignItems: 'center',
     },
 
     box3: {
         flex: 3,
-        backgroundColor: '#D71313',
+        backgroundColor: '#B90B0B',
         justifyContent: "flex-end",
         alignItems:'center',
         justifyContent: 'space-between',
