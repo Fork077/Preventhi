@@ -91,13 +91,13 @@ const styles= StyleSheet.create ({
 
     box1: {
         flex: 3,
-        backgroundColor: '#D71313',
+        backgroundColor: '#B90B0B',
         alignItems: "center",
     },
 
     box2: {
         flex: 1,
-        backgroundColor: '#D71313',
+        backgroundColor: '#B90B0B',
         alignItems: "center",
         justifyContent: "center",
     },
