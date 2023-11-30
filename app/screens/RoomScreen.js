@@ -1,6 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {React, useState} from 'react';
-import { ImageBackground, StyleSheet, Text, View, StatusBar, TouchableOpacity, ScrollView} from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, StatusBar, TouchableOpacity, ScrollView, TextInput} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { db } from '../../Firebase/Config';
@@ -12,6 +12,7 @@ function RoomScreen(props) {
     const [smokeVal, setSmokeVal] = useState(0)
     const [humidityVal, setHumidityVal] = useState(0)
     const [gasVal, setGasVal] = useState(0)
+    const [deviceName, setDevName] = useState()
     
     function readData() {
         const starCountRef = ref(db);
@@ -36,10 +37,10 @@ function RoomScreen(props) {
                     <Text style={styles.txt}>LIVING ROOM</Text>
                 </View>
 
-                <ScrollView>
-                      <View style={styles.box2}>
+                <ScrollView style={styles.scrollDiv}>
+                    <View style={styles.box2}>
                         <View style ={styles.individ}>
-                        <View style={styles.divBox}>
+                            <View style={styles.divBox}>
                             <CircularProgress
                             value={smokeVal}
                             titleColor={'#333'}
@@ -48,18 +49,22 @@ function RoomScreen(props) {
                             activeStrokeColor={'orange'}
                             activeStrokeSecondaryColor={'#C3305D'}
                             inActiveStrokeColor={'grey'}
-                            valueSuffix={'%'}
                             progressFormatter={(value, number) => {'worklet';
       
                             return value.toFixed(2);
                         }}/>
 
-                            <View  style={styles.textDesign}>
-                                <Text>
+                        <View  style={styles.textBox}>
+                                <Text style={styles.textDesign}>
                                     SMOKE
                                 </Text>
+                                <Text style={styles.textDesign2}>
+                                    Reading: {smokeVal}
+                                </Text>
+                                <Text style={styles.textDesign2}>
+                                    Status: 
+                                </Text>
                             </View>
-
                         </View>
                     </View>
                 
@@ -70,32 +75,53 @@ function RoomScreen(props) {
                             titleColor={'#333'}
                             titleStyle={{ fontWeight: 'bold' }}
                             circleBackgroundColor={'white'}
-                            activeStrokeColor={'yellow'}
-                            activeStrokeSecondaryColor={'#C3305D'}
+                            activeStrokeColor={'lightgreen'}
+                            activeStrokeSecondaryColor={'orange'}
                             inActiveStrokeColor={'grey'}
-                            valueSuffix={'%'}
                             progressFormatter={(value, number) => {'worklet';
       
                             return value.toFixed(2); // 2 decimal places
                             }}/>
+
+                            <View  style={styles.textBox}>
+                                <Text style={styles.textDesign}>
+                                    HUMIDITY
+                                </Text>
+                                <Text style={styles.textDesign2}>
+                                    Reading: {humidityVal}
+                                </Text>
+                                <Text style={styles.textDesign2}>
+                                    Status: 
+                                </Text>
+                            </View>
                         </View>
                     </View>
                     
                     <View style={styles.individ}>
                         <View style={styles.divBox}>
                             <CircularProgress
-                                value={45.06}
+                                value={100}
                                 titleColor={'#333'}
                                 titleStyle={{ fontWeight: 'bold' }}
                                 circleBackgroundColor={'white'}
                                 activeStrokeColor={'red'}
-                                activeStrokeSecondaryColor={'#C3305D'}
                                 inActiveStrokeColor={'grey'}
-                                valueSuffix={'%'}
                                 progressFormatter={(value, number) => {'worklet';
       
                                 return value.toFixed(2); // 2 decimal places
                                 }}/>
+
+                            <View  style={styles.textBox}>
+                                <Text style={styles.textDesign}>
+                                    FLAME
+                                </Text>
+                                <Text style={styles.textDesign2}>
+                                    Reading: {45.06}
+                                </Text>
+                                <Text style={styles.textDesign2}>
+                                    Status: 
+                                </Text>
+                            </View>
                         </View> 
                     </View>
 
@@ -106,14 +132,25 @@ function RoomScreen(props) {
                                 titleColor={'#333'}
                                 titleStyle={{ fontWeight: 'bold' }}
                                 circleBackgroundColor={'white'}
-                                activeStrokeColor={'darkorange'}
-                                activeStrokeSecondaryColor={'#C3305D'}
+                                activeStrokeColor={'blue'}
+                                activeStrokeSecondaryColor={'darkorange'}
                                 inActiveStrokeColor={'grey'}
-                                valueSuffix={'°C'}
                                 progressFormatter={(value, number) => {'worklet';
       
                                 return value.toFixed(2); // 2 decimal places
-                                }}/> 
+                                }}/>
+
+                            <View  style={styles.textBox}>
+                                <Text style={styles.textDesign}>
+                                    TEMPERATURE
+                                </Text>
+                                <Text style={styles.textDesign2}>
+                                    Reading: {prog} °C
+                                </Text>
+                                <Text style={styles.textDesign2}>
+                                    Status: 
+                                </Text>
+                            </View> 
                         </View>  
                         
                         <View style={styles.individ}>
@@ -126,22 +163,43 @@ function RoomScreen(props) {
                                 activeStrokeColor={'yellowgreen'}
                                 activeStrokeSecondaryColor={'#C3305D'}
                                 inActiveStrokeColor={'grey'}
-                                valueSuffix={'%'}
                                 progressFormatter={(value, number) => {'worklet';
       
                                 return value.toFixed(2);
                                 }}/>
+
+                            <View  style={styles.textBox}>
+                                <Text style={styles.textDesign}>
+                                    GAS
+                                </Text>
+                                <Text style={styles.textDesign2}>
+                                    Reading: {gasVal}
+                                </Text>
+                                <Text style={styles.textDesign2}>
+                                    Status: 
+                                </Text>
+                            </View>
+
                             </View>
                         </View>
                     </View>
                 </View>
             </ScrollView>
-
-                <TouchableOpacity style={styles.button} onPress={readData}> 
-                    <Text style={styles.buttonText}>
-                        READ
-                    </Text>
-                </TouchableOpacity>
+                
+                <View style={styles.bottomBox}>
+                    <TextInput style={styles.Inputbox}
+                    placeholder='Enter Your Device Name'
+                    value={deviceName}
+                    onChangeText={(name) => setName(name)}
+                    />
+                    
+                    <TouchableOpacity style={styles.Btn} onPress={readData}> 
+                        <Text style={styles.BtnText}>
+                            READ
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                
             </View>
         </ImageBackground>
     );
@@ -173,13 +231,55 @@ const styles = StyleSheet.create ({
         justifyContent: 'center',
     },
 
-    textDesign: {
-        fontWeight: 'bold',
+    textBox: {
         paddingTop: 10,
-        width: '50%',
+        width: '65%',
         alignItems: 'center',
     },
 
+    textDesign: {
+        fontWeight: 'bold',
+        fontSize: 20,
+    },
+
+    textDesign2: {
+        paddingTop: 8,
+        width: '85%',
+        fontSize: 15,
+        textAlign: 'left',
+    },
+
+    bottomBox: {
+        backgroundColor: '#B90B0B',
+        borderTopWidth: 1,
+        paddingTop: 5,
+        alignItems: 'center',
+    },
+
+    Inputbox: {
+        width: '94%',
+        height: 50,
+        borderRadius: 10,
+        backgroundColor: '#ffff',
+        padding: 15,
+        marginBottom: 10,
+    },
+
+    Btn:{
+        borderRadius: 10,
+        height: 45,
+        width: '30%',
+        backgroundColor: '#f1950e',
+        marginBottom: 10,
+    },
+
+    BtnText: {
+        color: "white",
+        textAlign: 'center',
+        padding: 10,
+        fontWeight: '400',
+        fontSize: 20,
+    },
 
     box2: {
         width: '100%',
@@ -198,6 +298,7 @@ const styles = StyleSheet.create ({
     },
 
     rowDirection:{
+        paddingBottom: 10,
         flexDirection: 'row',
     },
 
@@ -205,9 +306,13 @@ const styles = StyleSheet.create ({
         flexDirection: 'row',
         borderRadius: 20,
         backgroundColor: 'white',
-        width: 350,
+        width: '90%',
         padding: 10,
         marginBottom: 10,
+    },
+
+    scrollDiv: {
+        flex: 1,
     }
 })
 
