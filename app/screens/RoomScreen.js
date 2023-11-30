@@ -1,6 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {React, useState} from 'react';
-import { ImageBackground, StyleSheet, Text, View, StatusBar, TouchableOpacity} from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, StatusBar, TouchableOpacity, ScrollView} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { db } from '../../Firebase/Config';
@@ -35,9 +35,10 @@ function RoomScreen(props) {
                     </TouchableOpacity>
                     <Text style={styles.txt}>LIVING ROOM</Text>
                 </View>
-               
-                <View style={styles.box2}>
-                    <View style ={styles.individ}>
+
+                <ScrollView>
+                      <View style={styles.box2}>
+                        <View style ={styles.individ}>
                         <View style={styles.divBox}>
                             <CircularProgress
                             value={smokeVal}
@@ -53,11 +54,13 @@ function RoomScreen(props) {
                             return value.toFixed(2);
                         }}/>
 
+                            <View  style={styles.textDesign}>
+                                <Text>
+                                    SMOKE
+                                </Text>
+                            </View>
+
                         </View>
-                        
-                        <Text>
-                            SMOKE
-                        </Text>
                     </View>
                 
                     <View style={styles.individ}>
@@ -76,15 +79,8 @@ function RoomScreen(props) {
                             return value.toFixed(2); // 2 decimal places
                             }}/>
                         </View>
-                        
-                        <Text>
-                            HUMIDITY
-                        </Text>
                     </View>
-                
-                </View>
-
-                <View style={styles.box2}>
+                    
                     <View style={styles.individ}>
                         <View style={styles.divBox}>
                             <CircularProgress
@@ -101,10 +97,6 @@ function RoomScreen(props) {
                                 return value.toFixed(2); // 2 decimal places
                                 }}/>
                         </View> 
-
-                        <Text>
-                            FIRE
-                        </Text>
                     </View>
 
                     <View style={styles.individ}>
@@ -122,16 +114,9 @@ function RoomScreen(props) {
       
                                 return value.toFixed(2); // 2 decimal places
                                 }}/> 
-                        </View>
+                        </View>  
                         
-                        <Text>
-                            TEMPERATURE
-                        </Text>
-                    </View>
-                </View>
-
-                <View style={styles.box3}>
-                    <View style={styles.individ}>
+                        <View style={styles.individ}>
                         <View style={styles.divBox}>
                             <CircularProgress
                                 value={gasVal}
@@ -146,13 +131,12 @@ function RoomScreen(props) {
       
                                 return value.toFixed(2);
                                 }}/>
+                            </View>
                         </View>
-                        
-                        <Text>
-                            GAS
-                        </Text>
                     </View>
                 </View>
+            </ScrollView>
+
                 <TouchableOpacity style={styles.button} onPress={readData}> 
                     <Text style={styles.buttonText}>
                         READ
@@ -170,6 +154,7 @@ const styles = StyleSheet.create ({
     },
 
     box1: {
+        paddingTop: 25,
         flex: 1,
         backgroundColor: "#E7E6E1",
         justifyContent: 'center',
@@ -188,15 +173,18 @@ const styles = StyleSheet.create ({
         justifyContent: 'center',
     },
 
-    rowDirection: {
-        flexDirection: 'row',
+    textDesign: {
+        fontWeight: 'bold',
+        paddingTop: 10,
+        width: '50%',
+        alignItems: 'center',
     },
 
+
     box2: {
-        flexDirection: 'row',
+        width: '100%',
         alignItems: 'center',
-        justifyContent: 'space-evenly',
-        paddingTop: 20,
+        paddingTop: 10,
     },
 
     box3: {
@@ -209,10 +197,17 @@ const styles = StyleSheet.create ({
         alignItems: 'center',
     },
 
+    rowDirection:{
+        flexDirection: 'row',
+    },
+
     divBox:{
+        flexDirection: 'row',
         borderRadius: 20,
         backgroundColor: 'white',
+        width: 350,
         padding: 10,
+        marginBottom: 10,
     }
 })
 
