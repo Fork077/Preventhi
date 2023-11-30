@@ -7,6 +7,7 @@ const MeScreen = () => {
     const [name, setName] = useState('')
     const [account, setAccount] = useState('')
     const [address, setAddress] = useState('')
+    const [mobileNumber, setMobileNum] = useState('')
 
     useEffect(() => {
         firebase.firestore().collection('users')
@@ -16,6 +17,7 @@ const MeScreen = () => {
                 setName(snapshot.data())
                 setAccount(snapshot.data())
                 setAddress(snapshot.data())
+                setMobileNum(snapshot.data())
             }
             else {
                 console.log('User does not exist')
@@ -42,7 +44,7 @@ const MeScreen = () => {
                     Email: {account.email}
                 </Text >
                 <Text style={styles.txtConfig}>
-                    Mobile Number:
+                    Mobile Number: {mobileNumber.mobileNumber}
                 </Text>
                 <Text style={styles.txtConfig}>
                     Address: {address.address}
@@ -84,7 +86,7 @@ const styles = StyleSheet.create ({
         paddingLeft: 10,
         paddingTop: 20,
         flex: 3,
-        backgroundColor: '#D71313',
+        backgroundColor: '#B90B0B',
     },
 
     txtConfig:{
