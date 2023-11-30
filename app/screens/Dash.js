@@ -15,7 +15,7 @@ function Dash(props) {
     return (
         <Tab.Navigator 
         initialRouteName='Home'
-        screenOptions={{tabBarActiveBackgroundColor: '#D71313', tabBarActiveTintColor: 'white', tabBarInactiveTintColor: 'black'}}>
+        screenOptions={{tabBarActiveBackgroundColor: '#B90B0B', tabBarActiveTintColor: 'white', tabBarInactiveTintColor: 'black'}}>
              <Tab.Screen name="Home" component={HomeScreen} options= {{headerShown: false, tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" color={color} size={size} />),}}/>
              <Tab.Screen name="Rooms" component={RoomScreen} options={{headerShown: false, tabBarIcon: ({color, size})=> (
