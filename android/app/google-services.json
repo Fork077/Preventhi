@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "208809957173",
+    "project_id": "preventhinotifications",
+    "storage_bucket": "preventhinotifications.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208809957173:android:37aba5095129ce23fe5e7c",
+        "android_client_info": {
+          "package_name": "com.thorfin.Preventhi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrULQAT7dgwkbcJCj3-zNYAVdfgUG3eSw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

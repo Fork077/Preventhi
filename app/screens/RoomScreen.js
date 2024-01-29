@@ -1,5 +1,5 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 import { ImageBackground, StyleSheet, Text, View, StatusBar, TouchableOpacity, ScrollView, TextInput} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import CircularProgress from 'react-native-circular-progress-indicator';
@@ -8,33 +8,69 @@ import { ref, onValue } from 'firebase/database';
 
 function RoomScreen(props) {
 
-    const [prog, setProg] = useState(0)
+    const [temp, setTemp] = useState(0)
     const [smokeVal, setSmokeVal] = useState(0)
     const [humidityVal, setHumidityVal] = useState(0)
     const [gasVal, setGasVal] = useState(0)
+    const [flameVal, setFlameVal] = useState(0)
+    const [CarbonVal, setCarbonVal] = useState(0)
     const [deviceName, setDevName] = useState()
+
+    const [statTemp, setStatTemp] = useState("")
+    const [statHum, setStatHum] = useState("")
+    const [statSmoke, setStatSmoke] = useState("")
+    const [statFlame, setStatFlame] = useState("")
+    const [statGas, setStatGas] = useState("")
+    const [statCO, setStatCO] = useState("")
     
     function readData() {
-        const starCountRef = ref(db);
-        onValue(starCountRef, (snapshot) => {
+        const starTemp = ref(db, 'TEMPERATURE/');
+        const starFlame = ref(db, 'FLAME/');
+        const starLpg = ref(db, 'LPG/');
+        const starSmoke = ref(db, 'SMOKE/');
+        const starHum = ref(db, 'HUMIDITY/');
+        
+        onValue(starTemp, (snapshot) => {
             const data = snapshot.val();
-            setProg(data.temperature)
-            setSmokeVal(data.smokeValue)
-            setGasVal(data.lpgValue)
+            setTemp(data.temperature)
+        });
+        onValue(starHum, (snapshot) => {
+            const data = (snapshot.val());
             setHumidityVal(data.humidity)
         });
+        onValue(starFlame, (snapshot) => {
+            const data = (snapshot.val());
+            setFlameVal(data.flameReadings)
+            setStatFlame(data.flameStatus)
+        });
+        onValue(starLpg, (snapshot) => {
+            const data = (snapshot.val());
+            setGasVal(data.lpgValue)
+            setStatGas(data.lpgStatus)
+        });
+        onValue(starSmoke, (snapshot) => {
+            const data = (snapshot.val());
+            setSmokeVal(data.smokeValue)
+            setStatSmoke(data.smokeStatus)
+        });
+        alerNotif();
     }
 
     const navigation = useNavigation()
+
+    const alerNotif = () => {
+        if(smokeVal > 500){
+            alert('WARNING! THREATH DETECTED!!')
+        }else{
+            return;
+        }
+    }
 
     return (
         <ImageBackground style={styles.container}>
             <View style={styles.box1}>
                 <View style={styles.rowDirection}>
-                    <TouchableOpacity>
-                        <MaterialCommunityIcons name='less-than' color={'#EA5455'} size={40}/>
-                    </TouchableOpacity>
-                    <Text style={styles.txt}>LIVING ROOM</Text>
+                    <Text style={styles.txt}>SENSOR READINGS</Text>
                 </View>
 
                 <ScrollView style={styles.scrollDiv}>
@@ -62,7 +98,7 @@ function RoomScreen(props) {
                                     Reading: {smokeVal}
                                 </Text>
                                 <Text style={styles.textDesign2}>
-                                    Status: 
+                                    Status: {statSmoke}
                                 </Text>
                             </View>
                         </View>
@@ -100,7 +136,7 @@ function RoomScreen(props) {
                     <View style={styles.individ}>
                         <View style={styles.divBox}>
                             <CircularProgress
-                                value={100}
+                                value={flameVal}
                                 titleColor={'#333'}
                                 titleStyle={{ fontWeight: 'bold' }}
                                 circleBackgroundColor={'white'}
@@ -116,10 +152,10 @@ function RoomScreen(props) {
                                     FLAME
                                 </Text>
                                 <Text style={styles.textDesign2}>
-                                    Reading: {45.06}
+                                    Reading: {flameVal}
                                 </Text>
                                 <Text style={styles.textDesign2}>
-                                    Status: 
+                                    Status: {statFlame}
                                 </Text>
                             </View>
                         </View> 
@@ -128,7 +164,7 @@ function RoomScreen(props) {
                     <View style={styles.individ}>
                         <View style={styles.divBox}>
                             <CircularProgress
-                                value={prog}
+                                value={temp}
                                 titleColor={'#333'}
                                 titleStyle={{ fontWeight: 'bold' }}
                                 circleBackgroundColor={'white'}
@@ -145,7 +181,7 @@ function RoomScreen(props) {
                                     TEMPERATURE
                                 </Text>
                                 <Text style={styles.textDesign2}>
-                                    Reading: {prog} °C
+                                    Reading: {temp} °C
                                 </Text>
                                 <Text style={styles.textDesign2}>
                                     Status: 
@@ -176,7 +212,7 @@ function RoomScreen(props) {
                                     Reading: {gasVal}
                                 </Text>
                                 <Text style={styles.textDesign2}>
-                                    Status: 
+                                    Status: {statGas}
                                 </Text>
                             </View>
 

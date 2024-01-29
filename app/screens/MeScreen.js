@@ -8,6 +8,7 @@ const MeScreen = () => {
     const [account, setAccount] = useState('')
     const [address, setAddress] = useState('')
     const [mobileNumber, setMobileNum] = useState('')
+    const [buildType, setBuildType] = useState('')
 
     useEffect(() => {
         firebase.firestore().collection('users')
@@ -18,6 +19,7 @@ const MeScreen = () => {
                 setAccount(snapshot.data())
                 setAddress(snapshot.data())
                 setMobileNum(snapshot.data())
+                setBuildType(snapshot.data())
             }
             else {
                 console.log('User does not exist')
@@ -50,7 +52,7 @@ const MeScreen = () => {
                     Address: {address.address}
                 </Text>
                 <Text style={styles.txtConfig}>
-                    Type of occupancy:
+                    Type of occupancy: {buildType.buildType}
                 </Text>
 
                 <View style={styles.ExtBtn}>

@@ -8,11 +8,14 @@ import LoginPage from './app/screens/LoginPage';
 import Dash from './app/screens/Dash';
 import { firebase } from'./Firebase/Config.js';
 import { useEffect, useState } from 'react';
-
+import { usePushNotifications } from './pushNotifications';
 
 const Stack = createStackNavigator();
 
 function App() {
+  const { expoPushToken } = usePushNotifications();
+  console.log(expoPushToken);
+
   const[initializing, setInitializing] = useState(true);
   const[user, setUser] = useState();
 
@@ -46,6 +49,7 @@ function App() {
       </Stack.Navigator>
     );
   }
+  
 
   return (
     <Stack.Navigator>

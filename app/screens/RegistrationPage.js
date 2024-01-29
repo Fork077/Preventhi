@@ -6,6 +6,7 @@ import { ImageBackground, StyleSheet,
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState } from 'react';
 import {firebase} from '../../Firebase/Config';
+import { Picker } from '@react-native-picker/picker';
 
 
 const RegistrationPage = (props) => {
@@ -18,6 +19,7 @@ const RegistrationPage = (props) => {
     const[password, setPassword] = useState('')
     const[cpassword, setCPassword] = useState('')
     const[mobileNumber, setMobileNum] = useState('')
+    const[buildType, setBuildType] = useState()
 
     registerUser = async (name, email, address, password, mobileNumber) => {
         await firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -39,6 +41,7 @@ const RegistrationPage = (props) => {
                     name,
                     address,
                     mobileNumber,
+                    buildType,
                 })
             })
             .catch((error) => {
@@ -88,6 +91,27 @@ const RegistrationPage = (props) => {
                         onChangeText={(address) => setAddress(address)}
                     />
 
+                    <Picker
+                        style={styles.dropDown}
+                        mode='dropdown'
+                        selectedValue={buildType}
+                        onValueChange={(itemValue, itemIndex) =>
+                            setBuildType(itemValue)
+                        }>
+                        <Picker.Item label="Residential" value="Residential" />
+                        <Picker.Item label="Industrial" value="Industrial" />
+                        <Picker.Item label="Business" value="Business" />
+                        <Picker.Item label="Storage" value="Storage" />
+                    </Picker>
+
+
+                    <TextInput 
+                        style={styles.Inputbox} 
+                        placeholder='Enter Mobile Number'
+                        value={mobileNumber}
+                        onChangeText={(mobileNumber) => setMobileNum(mobileNumber)}
+                    />
+
                 <View style={styles.box}>
                     <TextInput 
                         style={styles.Inputbox} 
@@ -115,12 +139,6 @@ const RegistrationPage = (props) => {
                         onChangeText={(cpassword) => setCPassword(cpassword)}
                         secureTextEntry={hide}/>
 
-                    <TextInput
-                        style={styles.Inputbox}
-                        placeholder='Enter Mobile Number'
-                        value={mobileNumber}
-                        onChangeText={(mobileNumber) => setMobileNum(mobileNumber)} 
-                        />
                 </ScrollView>
             </View>
            
@@ -236,6 +254,11 @@ const styles = StyleSheet.create ({
 
     txt: {
         color: "#F5F5F5",
+    },
+
+    dropDown: {
+        borderColor: '#F5F5F5',
+        borderWidth: 1,
     }
 });
 
