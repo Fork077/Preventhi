@@ -91,20 +91,6 @@ const RegistrationPage = (props) => {
                         onChangeText={(address) => setAddress(address)}
                     />
 
-                    <Picker
-                        style={styles.dropDown}
-                        mode='dropdown'
-                        selectedValue={buildType}
-                        onValueChange={(itemValue, itemIndex) =>
-                            setBuildType(itemValue)
-                        }>
-                        <Picker.Item label="Residential" value="Residential" />
-                        <Picker.Item label="Industrial" value="Industrial" />
-                        <Picker.Item label="Business" value="Business" />
-                        <Picker.Item label="Storage" value="Storage" />
-                    </Picker>
-
-
                     <TextInput 
                         style={styles.Inputbox} 
                         placeholder='Enter Mobile Number'
@@ -138,6 +124,21 @@ const RegistrationPage = (props) => {
                         value={cpassword}
                         onChangeText={(cpassword) => setCPassword(cpassword)}
                         secureTextEntry={hide}/>
+
+                    <View style={styles.dropDown}>
+                        <Picker
+                            mode='dropdown'
+                            selectedValue={buildType}
+                            onValueChange={(itemValue, itemIndex) =>
+                            setBuildType(itemValue)
+                            }>
+                            <Picker.Item color="grey" label="Select Type of Occupancy"/>
+                            <Picker.Item label="Residential" value="Residential" />
+                            <Picker.Item label="Industrial" value="Industrial" />
+                            <Picker.Item label="Business" value="Business" />
+                            <Picker.Item label="Storage" value="Storage" />
+                        </Picker>
+                    </View>
 
                 </ScrollView>
             </View>
@@ -257,8 +258,11 @@ const styles = StyleSheet.create ({
     },
 
     dropDown: {
-        borderColor: '#F5F5F5',
+        width: '79%',
+        backgroundColor: '#ffff',
+        marginLeft: 15,
         borderWidth: 1,
+        
     }
 });
 
