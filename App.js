@@ -6,6 +6,7 @@ import WelcomeScreen from './app/screens/WelcomeScreen';
 import RegistrationPage from './app/screens/RegistrationPage';
 import LoginPage from './app/screens/LoginPage';
 import Dash from './app/screens/Dash';
+import BfpScreen from './app/screens/BfpScreen.js';
 import { firebase } from'./Firebase/Config.js';
 import { useEffect, useState } from 'react';
 import { usePushNotifications } from './pushNotifications';
@@ -48,19 +49,30 @@ function App() {
         />
       </Stack.Navigator>
     );
+  } else {
+    const userEmail = user.email;
+    if(userEmail && userEmail.toLowerCase().endsWith('bfp@gmail.com')) {
+      return (
+        <Stack.Navigator>
+          <Stack.Screen
+            options={{headerShown: false}}
+            name="BFP"
+            component={BfpScreen}
+          />
+        </Stack.Navigator>
+      );
+    } else {
+      return (
+        <Stack.Navigator>
+          <Stack.Screen
+            options={{headerShown: false}}
+            name="Dashboard"
+            component={Dash}
+          />
+        </Stack.Navigator>
+      )
+    }
   }
-  
-
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-       options={{headerShown: false}}
-       name="Dashboard"
-       component={Dash} 
-      />
-    </Stack.Navigator>
-  )
-
 }
 
 export default () => {
